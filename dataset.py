@@ -170,6 +170,7 @@ class VITONHDDataset(Dataset):
         return len(self.im_names)
     
     def __getitem__(self, idx):
+        print("id to read:", idx)
         img_fn = self.im_names[idx]
         cloth_fn = self.c_names[self.pair_key][idx]
         if self.transform_size is None and self.transform_color is None:
