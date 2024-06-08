@@ -232,7 +232,7 @@ class VITONHDDataset(Dataset):
                     image_densepose=image_densepose,
                     gt_cloth_warped_mask=gt_cloth_warped_mask,
                 )
-                print(list(transformed.keys()))
+                print("agn is:", transformed["agn"])
                 image=transformed["image"]
                 agn=transformed["agn"]
                 agn_mask=transformed["agn_mask"]
