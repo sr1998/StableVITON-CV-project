@@ -155,8 +155,8 @@ class VITONHDDataset(Dataset):
 
             # apply transform_color
             target_keys = ['image', 'agn', 'cloth']
-            print("idx: ", idx)
-            print(list(item.keys()))
+            print("image: ", img_fn)
+            print("items\n", item)
             item.update(transform_color(**{k:item[k] for k in target_keys}))
             print("here")
         
