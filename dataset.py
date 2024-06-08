@@ -8,8 +8,6 @@ from os.path import join as opj
 import cv2 as cv
 from torch.utils.data import Dataset
 
-from aug.augmentation import *
-
 # Applied to clothing and U-Net's input condition
 # image, agn, agn_mask, cloth, cloth_mask, image_densepose, gt_cloth_warped_mask
 transform_flip = A.Compose(
