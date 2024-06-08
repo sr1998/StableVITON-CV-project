@@ -171,7 +171,6 @@ class VITONHDDataset(Dataset):
     
     def __getitem__(self, idx):
         img_fn = self.im_names[idx]
-        print("id read:", img_fn)
         cloth_fn = self.c_names[self.pair_key][idx]
         if self.transform_size is None and self.transform_color is None:
             agn = imread(
@@ -233,6 +232,7 @@ class VITONHDDataset(Dataset):
                     image_densepose=image_densepose,
                     gt_cloth_warped_mask=gt_cloth_warped_mask,
                 )
+                print(list(transformed.keys()))
                 image=transformed["image"]
                 agn=transformed["agn"]
                 agn_mask=transformed["agn_mask"]
