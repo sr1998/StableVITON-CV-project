@@ -155,13 +155,16 @@ class VITONHDDataset(Dataset):
 
             # apply transform_color
             target_keys = ['image', 'agn', 'cloth']
+            print("idx: ", idx)
+            print(list(item.keys()))
             item.update(transform_color(**{k:item[k] for k in target_keys}))
+            print("here")
         
         # invert agn_mask
         item['agn_mask'] = 255 - item['agn_mask']
         # why?
         # agn = agn * agn_mask[:,:,None].astype(np.float32)/255.0 + 128 * (1 - agn_mask[:,:,None].astype(np.float32)/255.0)
-
+        
         # normalization
         for k in item.keys():
             item[k] = image_int_to_float(item[k], is_mask=('mask' in k))
