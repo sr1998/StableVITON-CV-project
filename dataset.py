@@ -47,6 +47,7 @@ transform_color = A.Compose([
     additional_targets={
         'cloth': 'image',
         'cloth_mask': 'mask',
+        "agn": "image",
     }
 )
 
@@ -154,11 +155,7 @@ class VITONHDDataset(Dataset):
             item['cloth'], item['cloth_mask'] = aug['image'], aug['mask']
 
             # apply transform_color
-            target_keys = ['image', 'agn', 'cloth']
-            print("image: ", img_fn)
-            print("items\n", item)
             item.update(transform_color(**{k:item[k] for k in target_keys}))
-            print("here")
         
         # invert agn_mask
         item['agn_mask'] = 255 - item['agn_mask']
