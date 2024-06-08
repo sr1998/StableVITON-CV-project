@@ -132,22 +132,23 @@ def main_worker(args):
         transform_size=args.transform_size, 
         transform_color=args.transform_color, 
     )
-    valid_paired_dataset = getattr(import_module("dataset"), config.dataset_name)(
-        data_root_dir=args.data_root_dir, 
-        img_H=args.img_H, 
-        img_W=args.img_W, 
-        is_test=True, 
-        is_paired=True, 
-        is_sorted=True, 
-    )
-    valid_unpaired_dataset = getattr(import_module("dataset"), config.dataset_name)(
-        data_root_dir=args.data_root_dir, 
-        img_H=args.img_H, 
-        img_W=args.img_W, 
-        is_test=True, 
-        is_paired=False, 
-        is_sorted=True, 
-    )
+    if not args.no_validation:
+        valid_paired_dataset = getattr(import_module("dataset"), config.dataset_name)(
+            data_root_dir=args.data_root_dir, 
+            img_H=args.img_H, 
+            img_W=args.img_W, 
+            is_test=True, 
+            is_paired=True, 
+            is_sorted=True, 
+        )
+        valid_unpaired_dataset = getattr(import_module("dataset"), config.dataset_name)(
+            data_root_dir=args.data_root_dir, 
+            img_H=args.img_H, 
+            img_W=args.img_W, 
+            is_test=True, 
+            is_paired=False, 
+            is_sorted=True, 
+        )
       
     train_dataloader = DataLoader(
         train_dataset,
@@ -156,20 +157,21 @@ def main_worker(args):
         shuffle=True, 
         pin_memory=True
     )
-    valid_paired_dataloader = DataLoader(
-        valid_paired_dataset, 
-        num_workers=4, 
-        batch_size=max(args.batch_size//args.n_gpus, 1), 
-        shuffle=False, 
-        pin_memory=True
-    )
-    valid_unpaired_dataloader = DataLoader(
-        valid_unpaired_dataset, 
-        num_workers=4, 
-        batch_size=max(args.batch_size//args.n_gpus, 1), 
-        shuffle=False, 
-        pin_memory=True
-    )
+    if not args.no_validation:
+        valid_paired_dataloader = DataLoader(
+            valid_paired_dataset, 
+            num_workers=4, 
+            batch_size=max(args.batch_size//args.n_gpus, 1), 
+            shuffle=False, 
+            pin_memory=True
+        )
+        valid_unpaired_dataloader = DataLoader(
+            valid_unpaired_dataset, 
+            num_workers=4, 
+            batch_size=max(args.batch_size//args.n_gpus, 1), 
+            shuffle=False, 
+            pin_memory=True
+        )
     
     #### trainer >>>>
     img_logger = ImageLogger(
