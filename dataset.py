@@ -180,7 +180,7 @@ class VITONHDDataset(Dataset):
                 self.img_W
             )
             agn_mask = imread(
-                opj(self.drd, self.data_type, "agnostic-mask", self.im_names[idx].replace(".jpg", "_mask.png")), 
+                opj(self.drd, self.data_type, "agnostic-mask", self.im_names[idx].replace(".jpg", "_mask.jpg")), 
                 self.img_H, 
                 self.img_W, 
                 is_mask=True, 
