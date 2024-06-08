@@ -46,7 +46,7 @@ transform_color = A.Compose([
     A.RandomBrightnessContrast(brightness_limit=0, contrast_limit=0.3, p=0.5)],
     additional_targets={
         'cloth': 'image',
-        'cloth_mask': 'mask',
+        # 'cloth_mask': 'mask',
         "agn": "image",
     }
 )
@@ -155,6 +155,7 @@ class VITONHDDataset(Dataset):
             item['cloth'], item['cloth_mask'] = aug['image'], aug['mask']
 
             # apply transform_color
+            target_keys = ["image", "cloth", "agn"]
             item.update(transform_color(**{k:item[k] for k in target_keys}))
         
         # invert agn_mask
