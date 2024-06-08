@@ -78,7 +78,7 @@ def image_int_to_float(img, is_mask=False, invert_mask=False):
         img = (img.astype(np.float32) / 127.5) - 1.0
     return img
 
-class VITONHDDataset_aug(Dataset):
+class VITONHDDataset(Dataset):
     def __init__(
             self, 
             data_root_dir, 
